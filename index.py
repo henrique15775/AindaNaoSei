@@ -5,6 +5,9 @@ from enum import auto
 from logging import root
 from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
+
+from requests import delete
 from src.model.address import Address
 
 
@@ -22,22 +25,29 @@ CepEntry = Entry(window)
 
 CepEntry.place(x=230,y=65)
 textLog = Label(window, bg="WHITE")
-
+textLog
 checkIfUpdate = True
 
 def buscarCep():
     cep = CepEntry.get()
-    #endereco = Address(cep)
     endereco = Address(cep)
-    print(endereco.localidadeUF)
-    
+    resultsContents = StringVar()
+    textLog['textvariable'] = resultsContents
+    if(endereco):
+        resultsContents.set(f"""
+                            Logradouro -> {endereco.logradouro}
+                            Bairro -> {endereco.bairro}
+                            Cidade/UF -> {endereco.localidadeUF}
+                            CEP -> {endereco.CEP}
+                            """)
+    del(endereco)
+    del(resultsContents)
+
+
 button = ttk.Button(window, text='Buscar', command=buscarCep)
-button.place(x=265,y=90)
+button.place(x=255,y=90)
 
-
-resultsContents = StringVar()
-textLog['textvariable'] = resultsContents
-resultsContents.set('New value to display')
+textLog.place(x=100,y=130)
 
 
 

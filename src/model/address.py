@@ -1,12 +1,12 @@
 from .. import requisicoes
+
 class Address:
     def __init__(self, CEP):
         self.__CEP = CEP
         req = requisicoes.RequisicaoCep(self.__CEP)
-        print(req)
         self.__logradouro = req['logradouro']
         self.__bairro = req['bairro']
-        self.__localidadeUF = req['localidade']
+        self.__localidadeUF = req['localidade'] + "/" + req['uf']
         
     @property
     def logradouro(self):
@@ -14,7 +14,7 @@ class Address:
         
     @logradouro.setter
     def logradouro(self,newLogradouro):
-        self.__logradoutro = newLogradouro   
+        self.__logradouro = newLogradouro   
         
     @property
     def bairro(self):
@@ -39,13 +39,5 @@ class Address:
     
     @CEP.setter
     def CEP(self, newCEP):
-        self.__CEP = newCEP    
-        
-        
-    def AtualizarCEP(self, newCEP):
         self.__CEP = newCEP
-        req = requisicoes.RequisicaoCep(newCEP)
-        self.__logradouro = req.logradouro
-        self.__bairro = req.bairro
-        self.__localidadeUF = req.localidade
     
